@@ -33,6 +33,40 @@
 
 // Sample class component
 
+const employee = [
+    {
+        id:1,
+        name:'Ryan King',
+        ext:'1124',
+        email: 'ryan13king@gmail.com',
+        title:'Escrow Officer',
+        dateHired: new Date('2018-08-15'),
+        isEmployed: true,
+    },
+    {
+            id:2,
+        name:'Sally',
+        ext:'1125',
+        email: 'sally@gmail.com',
+        title:'Director of Sales',
+        dateHired: new Date('2015-01-03'),
+        isEmployed: false,
+    }
+    
+]
+class BorderWrap extends React.Component {
+    render() {
+        const borderStyle = {border: "3px solid silver",
+        padding: 6}
+        return(
+            <div style={borderStyle}>
+                {this.props.children}
+            </div>
+        )
+            
+    }
+}
+
 class EmployeeFilter extends React.Component {
     render() {
         return(<div>This is a placeholder for the Employee Filter.</div>)
@@ -41,30 +75,24 @@ class EmployeeFilter extends React.Component {
 
 class EmployeeTable extends React.Component {
     render() {
-        const rowStyle = {border:"1px solid silver", padding: 4}
+        const employeeRows = employee.map(employee =>
+            <EmployeeRow key={employee.id} employee={employee}/>)
+        
         return (
-            <table style = {{width: "800px", borderCollapse: "collapse"}}>
+            <table className = "bordered-table">
                 <thead>
                     <tr>
-                        <th style = {rowStyle}>Name</th>
-                        <th style = {rowStyle}>Extension</th>
-                        <th style = {rowStyle}>Email</th>
-                        <th style = {rowStyle}>Title</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Extension</th>
+                        <th>Email</th>
+                        <th>Title</th>
+                        <th>Date Hired</th>
+                        <th>Currently Employed?</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <EmployeeRow rowStyle={rowStyle}
-                        employee_name="Ryan King"
-                        employee_ext={7013}
-                        employee_email="ryan13king@gmail.com"
-                        employee_title="Escrow Officer"
-                    />
-                    <EmployeeRow rowStyle={rowStyle}
-                        employee_name="Sally Smith"
-                        employee_ext={1125}
-                        employee_email="sally@gmail.com"
-                        employee_title="Director of Data"
-                    />
+                    {employeeRows}
                 </tbody>
             </table>
         )
@@ -73,13 +101,16 @@ class EmployeeTable extends React.Component {
 
 class EmployeeRow extends React.Component {
     render() {
-        const style = this.props.rowStyle
+        const employee = this.props.employee
         return (
             <tr>
-                <td style={style}>{this.props.employee_name}</td>
-                <td style={style}>{this.props.employee_ext}</td>
-                <td style={style}>{this.props.employee_email}</td>
-                <td style={style}>{this.props.employee_title}</td>
+                <td>{employee.id}</td>
+                <td>{employee.name}</td>
+                <td>{employee.ext}</td>
+                <td>{employee.email}</td>
+                <td>{employee.title}</td>
+                <td>{employee.dateHired.toDateString()}</td>
+                <td>{employee.isEmployed ? 'Yes' : 'No'}</td>
             </tr>
         )
     }
@@ -94,16 +125,22 @@ class EmployeeList extends React.Component {
     render(){
         return(
             <React.Fragment>
-                <h1>Employee Management Application</h1>
-                <EmployeeFilter/>
-                <hr/>
-                <EmployeeTable/>
-                <hr/>
-                <EmployeeAdd/>
+                <BorderWrap>
+                    <h1>Employee Management Application</h1>
+                    <EmployeeFilter/>
+                    <hr/>
+                    <EmployeeTable/>
+                    <hr/>
+                    <EmployeeAdd/>
+                </BorderWrap>
             </React.Fragment>
         )
     }
 }
-const contentNode = document.getElementById('content');
 
-ReactDOM.render(<EmployeeList/>, contentNode)
+ReactDOM.render(
+    <React.StrictMode>
+        <EmployeeList/>
+    </React.StrictMode>,
+    document.getElementById('content')
+)
