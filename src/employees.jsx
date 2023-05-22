@@ -41,7 +41,47 @@ class EmployeeFilter extends React.Component {
 
 class EmployeeTable extends React.Component {
     render() {
-        return<div>This is a placeholder for the Employee Table.</div>
+        const rowStyle = {border:"1px solid silver", padding: 4}
+        return (
+            <table style = {{width: "800px", borderCollapse: "collapse"}}>
+                <thead>
+                    <tr>
+                        <th style = {rowStyle}>Name</th>
+                        <th style = {rowStyle}>Extension</th>
+                        <th style = {rowStyle}>Email</th>
+                        <th style = {rowStyle}>Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <EmployeeRow rowStyle={rowStyle}
+                        employee_name="Ryan King"
+                        employee_ext={7013}
+                        employee_email="ryan13king@gmail.com"
+                        employee_title="Escrow Officer"
+                    />
+                    <EmployeeRow rowStyle={rowStyle}
+                        employee_name="Sally Smith"
+                        employee_ext={1125}
+                        employee_email="sally@gmail.com"
+                        employee_title="Director of Data"
+                    />
+                </tbody>
+            </table>
+        )
+    }
+}
+
+class EmployeeRow extends React.Component {
+    render() {
+        const style = this.props.rowStyle
+        return (
+            <tr>
+                <td style={style}>{this.props.employee_name}</td>
+                <td style={style}>{this.props.employee_ext}</td>
+                <td style={style}>{this.props.employee_email}</td>
+                <td style={style}>{this.props.employee_title}</td>
+            </tr>
+        )
     }
 }
 
@@ -53,14 +93,14 @@ class EmployeeAdd extends React.Component {
 class EmployeeList extends React.Component {
     render(){
         return(
-        <React.Fragment>
-            <h1>Employee Management Application</h1>
-            <EmployeeFilter/>
-            <hr/>
-            <EmployeeTable/>
-            <hr/>
-            <EmployeeAdd/>
-        </React.Fragment>
+            <React.Fragment>
+                <h1>Employee Management Application</h1>
+                <EmployeeFilter/>
+                <hr/>
+                <EmployeeTable/>
+                <hr/>
+                <EmployeeAdd/>
+            </React.Fragment>
         )
     }
 }
